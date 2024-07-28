@@ -1,18 +1,13 @@
-const path = require('path');
-const { getDefaultConfig } = require('@expo/metro-config');
-const { getConfig } = require('react-native-builder-bob/metro-config');
-const pkg = require('../package.json');
+// Learn more https://docs.expo.io/guides/customizing-metro
+const { getDefaultConfig } = require('expo/metro-config');
+const path = require('path')
 
-const root = path.resolve(__dirname, '..');
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname);
 
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-module.exports = getConfig(getDefaultConfig(__dirname), {
-  root,
-  pkg,
-  project: __dirname,
-});
+const packagePath = path.resolve(__dirname, '../')
+console.log('Package path')
+config.resolver.extraNodeModules['react-native-transformers'] = packagePath
+config.watchFolders = [...config.watchFolders, packagePath]
+
+module.exports = config;
