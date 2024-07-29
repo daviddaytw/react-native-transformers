@@ -1,6 +1,6 @@
 {
   "name": "react-native-transformers",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha.0",
   "description": "Execute LLM from huggingface on mobile locally with onnxruntime.",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
