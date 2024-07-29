@@ -12,19 +12,19 @@
 
 To use `react-native-transformers`, you need to install `onnxruntime-react-native` as a peer dependency. Follow the steps below:
 
-1. Install the peer dependency:
+### 1. Install the peer dependency:
 
    ```sh
    npm install onnxruntime-react-native
    ```
 
-2. Install `react-native-transformers`:
+### 2. Install `react-native-transformers`:
 
    ```sh
    npm install react-native-transformers
    ```
 
-3. Configure React-Native or Expo
+### 3. Configure React-Native or Expo
 
 <details>
   <summary>React Native CLI</summary>
@@ -52,7 +52,7 @@ To use `react-native-transformers`, you need to install `onnxruntime-react-nativ
     ```
 </details>
 
-4. Babel Configuration
+### 4. Babel Configuration
 
   You need to add the `babel-plugin-transform-import-meta` plugin to your Babel configuration (e.g., `.babelrc` or `babel.config.js`):
 
@@ -143,3 +143,12 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Acknowledgements
 
 This library relies on the ONNX Runtime for running the models efficiently on mobile devices.
+
+## External Links
+
+- [Expo Plugins](https://docs.expo.dev/guides/config-plugins/)
+- [ONNX Runtime](https://onnxruntime.ai/)
+- [Babel](https://babeljs.io/)
+- [Hugging Face](https://huggingface.co/)
+
+These links provide additional information on how to configure and utilize the various components used by `react-native-transformers`.
