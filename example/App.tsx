@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import * as FileSystem from "expo-file-system";
-import Transformers from "react-native-transformers";
+import { Pipeline } from "react-native-transformers";
 import presets from "./presets.json";
 
 export default function App() {
@@ -22,8 +22,7 @@ export default function App() {
     options?: any;
   }) => {
     console.log("loading");
-    await Transformers.release();
-    await Transformers.init(preset.model, preset.onnx_path, {
+    await Pipeline.TextGeneration.init(preset.model, preset.onnx_path, {
       verbose: true,
       fetch: async (url) => {
         console.log("downloading... " + url);
@@ -50,7 +49,7 @@ export default function App() {
   };
 
   const AutoComplete = () => {
-    Transformers.text_generation(input, setOutput);
+    Pipeline.TextGeneration.generate(input, setOutput);
   };
 
   return (
