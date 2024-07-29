@@ -1,29 +1,145 @@
 # react-native-transformers
 
-Execute LLM from huggingface on mobile locally.
+`react-native-transformers` is a React Native library for incorporating transformer models into your mobile applications. It supports both iOS and Android platforms, allowing you to leverage advanced AI models directly on your device.
+
+## Features
+
+- On-device transformer model support
+- Compatible with iOS and Android
+- Simple API for model loading and text generation
 
 ## Installation
 
-```sh
-npm install react-native-transformers
-```
+To use `react-native-transformers`, you need to install `onnxruntime-react-native` as a peer dependency. Follow the steps below:
+
+1. Install the peer dependency:
+
+   ```sh
+   npm install onnxruntime-react-native
+   ```
+
+2. Install `react-native-transformers`:
+
+   ```sh
+   npm install react-native-transformers
+   ```
+
+3. Configure React-Native or Expo
+
+<details>
+  <summary>React Native CLI</summary>
+
+  - Link the `onnxruntime-react-native` library:
+
+    ```sh
+    npx react-native link onnxruntime-react-native
+    ```
+</details>
+
+<details>
+  <summary>Expo</summary>
+
+  - Install the Expo plugin configuration in `app.json` or `app.config.js`:
+
+    ```json
+    {
+      "expo": {
+        "plugins": [
+          "onnxruntime-react-native"
+        ],
+      }
+    }
+    ```
+</details>
+
+4. Babel Configuration
+
+  You need to add the `babel-plugin-transform-import-meta` plugin to your Babel configuration (e.g., `.babelrc` or `babel.config.js`):
+
+   ```json
+   {
+     "plugins": ["babel-plugin-transform-import-meta"]
+   }
+   ```
 
 ## Usage
 
+Here is an example of how to use `react-native-transformers` in an Expo application:
 
-```js
-import { multiply } from 'react-native-transformers';
+```javascript
+import React from "react";
+import { View, Text, Button, TextInput } from "react-native";
+import { Pipeline } from "react-native-transformers";
 
-// ...
+export default function App() {
+  const [output, setOutput] = React.useState("");
 
-const result = await multiply(3, 7);
+  // Function to initialize the model
+  const loadModel = async () => {
+    await Pipeline.TextGeneration.init("Felladrin/onnx-Llama-160M-Chat-v1", "onnx/decoder_model_merged.onnx");
+  };
+
+  // Function to generate text
+  const generateText = () => {
+    Pipeline.TextGeneration.generate("Hello world", setOutput);
+  };
+
+  return (
+    <View>
+      <Button title="Load Model" onPress={loadModel} />
+      <Button title="Generate Text" onPress={generateText} />
+      <Text>Output: {output}</Text>
+    </View>
+  );
+}
 ```
 
+## API
+
+### `Pipeline.TextGeneration`
+
+The `Pipeline.TextGeneration` module provides methods for initializing the model, generating text, and releasing resources.
+
+#### Methods
+
+##### `init(model_name: string, onnx_path: string, options?: Partial<InitOptions>): Promise<void>`
+
+Initializes the text generation pipeline with the specified model and ONNX path.
+
+- **Parameters:**
+  - `model_name` (string): The name of the model to load.
+  - `onnx_path` (string): The path to the ONNX model.
+  - `options` (Partial<InitOptions>, optional): Additional initialization options.
+    - `max_tokens` (number): The maximum number of tokens for text generation.
+    - `verbose` (boolean): Enables verbose logging.
+    - `externalData` (boolean): Indicates if external data is used.
+    - `fetch` (function): Function to fetch external data.
+    - `executionProviders` (InferenceSession.ExecutionProviderConfig[]): List of execution providers for ONNX runtime.
+    - `show_special` (boolean): Shows special tokens in the output.
+
+##### `generate(prompt: string, callback?: (text: string) => void): Promise<string>`
+
+Generates text based on the given prompt.
+
+- **Parameters:**
+  - `prompt` (string): The input prompt for text generation.
+  - `callback` (function, optional): Optional callback function to handle intermediate text.
+
+- **Returns:**
+  - (Promise<string>): The generated text.
+
+##### `release(): Promise<void>`
+
+Releases the resources used by the model.
 
 ## Contributing
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+Contributions are welcome! See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
 ## License
 
-MIT
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+This library relies on the ONNX Runtime for running the models efficiently on mobile devices.
