@@ -30,14 +30,14 @@ export class Base {
 
   async load(
     model: string,
-    onnx_file: string = "/onnx/model.onnx",
+    onnx_file: string = "onnx/model.onnx",
     options: LoadOptions,
   ) {
     const verbose = options.verbose;
     const fetch = options.fetch;
 
     const json_bytes = await load(
-      await fetch(getHuggingfaceUrl(model, "/config.json")),
+      await fetch(getHuggingfaceUrl(model, "config.json")),
     );
     // @ts-ignore
     const textDecoder = new TextDecoder();

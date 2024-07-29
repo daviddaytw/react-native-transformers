@@ -30,18 +30,19 @@ export class TextGeneration extends Base {
   ): Promise<bigint[]> {
     const maxTokens = options.maxTokens;
     const feed = this.feed;
-    const initialTokens = BigInt64Array.from(tokens);
+    const initialTokens = BigInt64Array.from(tokens.map(BigInt));
     const inputIdsTensor = new Tensor("int64", initialTokens, [
       1,
       tokens.length,
     ]);
+    feed.input_ids = inputIdsTensor;
 
     this.stopGeneration = false;
     this.outputTokens.push(...inputIdsTensor.data);
 
     let lastToken = 0n;
     let sequenceLength = this.outputTokens.length;
-    const initialLength = inputIdsTensor.size;
+    const initialLength = feed.input_ids.size;
 
     // Prepare position IDs if needed
     if (this.needPositionIds) {
