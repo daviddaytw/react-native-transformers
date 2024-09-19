@@ -1,5 +1,7 @@
 # react-native-transformers
 
+![NPM Version](https://img.shields.io/npm/v/react-native-transformers)
+
 `react-native-transformers` is a React Native library for incorporating transformer models into your mobile applications. It supports both iOS and Android platforms, allowing you to leverage advanced AI models directly on your device.
 
 ## Features
