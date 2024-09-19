@@ -94,43 +94,7 @@ export default function App() {
 }
 ```
 
-## API
-
-### `Pipeline.TextGeneration`
-
-The `Pipeline.TextGeneration` module provides methods for initializing the model, generating text, and releasing resources.
-
-#### Methods
-
-##### `init(model_name: string, onnx_path: string, options?: Partial<InitOptions>): Promise<void>`
-
-Initializes the text generation pipeline with the specified model and ONNX path.
-
-- **Parameters:**
-  - `model_name` (string): The name of the model to load.
-  - `onnx_path` (string): The path to the ONNX model.
-  - `options` (Partial<InitOptions>, optional): Additional initialization options.
-    - `max_tokens` (number): The maximum number of tokens for text generation.
-    - `verbose` (boolean): Enables verbose logging.
-    - `externalData` (boolean): Indicates if external data is used.
-    - `fetch` (function): Function to fetch external data.
-    - `executionProviders` (InferenceSession.ExecutionProviderConfig[]): List of execution providers for ONNX runtime.
-    - `show_special` (boolean): Shows special tokens in the output.
-
-##### `generate(prompt: string, callback?: (text: string) => void): Promise<string>`
-
-Generates text based on the given prompt.
-
-- **Parameters:**
-  - `prompt` (string): The input prompt for text generation.
-  - `callback` (function, optional): Optional callback function to handle intermediate text.
-
-- **Returns:**
-  - (Promise<string>): The generated text.
-
-##### `release(): Promise<void>`
-
-Releases the resources used by the model.
+For detailed usage please reference ['API documentation'](https://davidday.tw/react-native-transformers/)
 
 ## Contributing
 

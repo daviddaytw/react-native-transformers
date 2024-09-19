@@ -2,7 +2,9 @@ import { env, AutoTokenizer, PreTrainedTokenizer } from "@xenova/transformers";
 import { TextGeneration as Model } from "../models/text-generation";
 import { LoadOptions } from "../models/base";
 
+/** Initialization Options */
 export interface InitOptions extends LoadOptions {
+  /** Shows special tokens in the output. */
   show_special: boolean;
 }
 

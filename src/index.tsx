@@ -1,4 +1,4 @@
-import { TextGeneration as TextGenerationModel } from "./models/text-generation";
+import { TextGeneration } from "./models/text-generation";
 import TextGenerationPipeline from "./pipelines/text-generation";
 
 export const Pipeline = {
@@ -6,10 +6,14 @@ export const Pipeline = {
 };
 
 export const Model = {
-  TextGeneration: TextGenerationModel,
+  TextGeneration,
 };
 
 export default {
   Pipeline,
   Model,
 };
+
+export type * from "./models/base";
+export type * from "./models/text-generation";
+export type * from "./pipelines/text-generation";
