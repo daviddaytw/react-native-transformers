@@ -14,7 +14,7 @@
   },
   "scripts": {
     "example": "yarn workspace react-native-transformers-example",
-    "test": "jest",
+    "test": "jest --coverage",
     "lint": "eslint . --fix",
     "prepare": "bob build",
     "release": "release-it",
