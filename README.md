@@ -4,13 +4,17 @@
 [![codecov](https://codecov.io/github/daviddaytw/react-native-transformers/graph/badge.svg?token=G3D0Y33SI4)](https://codecov.io/github/daviddaytw/react-native-transformers)
 [![TypeDoc](https://github.com/daviddaytw/react-native-transformers/actions/workflows/docs.yml/badge.svg)](https://daviddaytw.github.io/react-native-transformers)
 
-`react-native-transformers` is a React Native library for incorporating transformer models into your mobile applications. It supports both iOS and Android platforms, allowing you to leverage advanced AI models directly on your device.
+`react-native-transformers` is a React Native library for running Large Language Models (LLMs) from Hugging Face on your mobile applications locally. It supports both iOS and Android platforms, allowing you to leverage advanced AI models directly on your device without requiring an internet connection.
 
 ## Features
 
-- On-device transformer model support
-- Compatible with iOS and Android
-- Simple API for model loading and text generation
+- On-device transformer model support for both text generation and text embedding
+- Local inference without internet connectivity
+- Compatible with iOS and Android platforms
+- Simple API for model loading and inference
+- Support for Hugging Face models in ONNX format
+- Built on top of ONNX Runtime for efficient model execution
+- TypeScript support with full type definitions
 
 ## Installation
 
@@ -68,11 +72,11 @@ To use `react-native-transformers`, you need to install `onnxruntime-react-nativ
 
 ## Usage
 
-Here is an example of how to use `react-native-transformers` in an Expo application:
+### Text Generation Example
 
 ```javascript
 import React from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import { View, Text, Button } from "react-native";
 import { Pipeline } from "react-native-transformers";
 
 export default function App() {
@@ -98,7 +102,38 @@ export default function App() {
 }
 ```
 
-For detailed usage please reference ['API documentation'](https://daviddaytw.github.io/react-native-transformers/)
+### Text Embedding Example
+
+```javascript
+import React from "react";
+import { View, Text, Button } from "react-native";
+import { Pipeline } from "react-native-transformers";
+
+export default function App() {
+  const [embedding, setEmbedding] = React.useState([]);
+
+  // Function to initialize the model
+  const loadModel = async () => {
+    await Pipeline.TextEmbedding.init("Xenova/all-MiniLM-L6-v2");
+  };
+
+  // Function to generate embeddings
+  const generateEmbedding = async () => {
+    const result = await Pipeline.TextEmbedding.generate("Hello world");
+    setEmbedding(result);
+  };
+
+  return (
+    <View>
+      <Button title="Load Model" onPress={loadModel} />
+      <Button title="Generate Embedding" onPress={generateEmbedding} />
+      <Text>Embedding Length: {embedding.length}</Text>
+    </View>
+  );
+}
+```
+
+For detailed API documentation, please visit our [TypeDoc documentation](https://daviddaytw.github.io/react-native-transformers/).
 
 ## Contributing
 
@@ -110,13 +145,15 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Acknowledgements
 
-This library relies on the ONNX Runtime for running the models efficiently on mobile devices.
+- [ONNX Runtime](https://onnxruntime.ai/) for efficient model execution on mobile devices
+- [@xenova/transformers](https://www.npmjs.com/package/@xenova/transformers) for transformer model implementations
+- [Hugging Face](https://huggingface.co/) for providing pre-trained models and model hosting
 
 ## External Links
 
-- [Expo Plugins](https://docs.expo.dev/guides/config-plugins/)
-- [ONNX Runtime](https://onnxruntime.ai/)
-- [Babel](https://babeljs.io/)
-- [Hugging Face](https://huggingface.co/)
+- [Expo Plugins Documentation](https://docs.expo.dev/guides/config-plugins/)
+- [ONNX Runtime Documentation](https://onnxruntime.ai/)
+- [Hugging Face Model Hub](https://huggingface.co/models)
+- [Babel Documentation](https://babeljs.io/)
 
 These links provide additional information on how to configure and utilize the various components used by `react-native-transformers`.
