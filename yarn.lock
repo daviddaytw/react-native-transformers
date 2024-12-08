@@ -12669,6 +12669,9 @@ __metadata:
   resolution: "react-native-transformers@workspace:."
   dependencies:
     "@babel/core": ^7.20.0
+    "@babel/plugin-transform-class-properties": ^7.25.9
+    "@babel/plugin-transform-private-methods": ^7.25.9
+    "@babel/plugin-transform-private-property-in-object": ^7.25.9
     "@react-native/eslint-config": ^0.74.85
     "@release-it/conventional-changelog": ^8.0.1
     "@tsconfig/react-native": ^3.0.5
