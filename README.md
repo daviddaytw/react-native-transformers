@@ -96,7 +96,7 @@ export default function App() {
 }
 ```
 
-For detailed usage please reference ['API documentation'](https://davidday.tw/react-native-transformers/)
+For detailed usage please reference ['API documentation'](https://daviddaytw.github.io/react-native-transformers/)
 
 ## Contributing
 
