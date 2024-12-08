@@ -2,6 +2,7 @@
 
 ![NPM Version](https://img.shields.io/npm/v/react-native-transformers)
 [![codecov](https://codecov.io/github/daviddaytw/react-native-transformers/graph/badge.svg?token=G3D0Y33SI4)](https://codecov.io/github/daviddaytw/react-native-transformers)
+[![TypeDoc](https://github.com/daviddaytw/react-native-transformers/actions/workflows/docs.yml/badge.svg)](https://daviddaytw.github.io/react-native-transformers)
 
 `react-native-transformers` is a React Native library for incorporating transformer models into your mobile applications. It supports both iOS and Android platforms, allowing you to leverage advanced AI models directly on your device.
 
