@@ -25,23 +25,39 @@ export default function App() {
     await Pipeline.TextGeneration.init(preset.model, preset.onnx_path, {
       verbose: true,
       fetch: async (url) => {
-        console.log("downloading... " + url);
-        const localpath = FileSystem.cacheDirectory + url.split("/").pop()!;
-
-        const downloadResumable = FileSystem.createDownloadResumable(
-          url,
-          localpath,
-          {},
-          ({ totalBytesWritten, totalBytesExpectedToWrite }) => {
-            setProgress(totalBytesWritten / totalBytesExpectedToWrite);
-          },
-        );
-        const result = await downloadResumable.downloadAsync();
-        if (result === undefined) {
-          throw new Error("Download failed.");
+        try {
+          console.log("Checking file... " + url);
+          const fileName = url.split("/").pop()!;
+          const localPath = FileSystem.documentDirectory + fileName;
+      
+          // Check if the file already exists
+          const fileInfo = await FileSystem.getInfoAsync(localPath);
+          if (fileInfo.exists) {
+            console.log("File already exists: " + localPath);
+            return localPath;
+          }
+      
+          console.log("Downloading... " + url);
+          const downloadResumable = FileSystem.createDownloadResumable(
+            url,
+            localPath,
+            {},
+            ({ totalBytesWritten, totalBytesExpectedToWrite }) => {
+              setProgress(totalBytesWritten / totalBytesExpectedToWrite);
+            }
+          );
+      
+          const result = await downloadResumable.downloadAsync();
+          if (!result) {
+            throw new Error("Download failed.");
+          }
+      
+          console.log("Downloaded to: " + result.uri);
+          return result.uri;
+        } catch (error) {
+          console.error("Download error:", error);
+          return null;
         }
-        console.log("downloaded as " + result.uri);
-        return result.uri;
       },
       ...preset.options,
     });

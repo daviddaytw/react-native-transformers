@@ -81,6 +81,8 @@ module.exports = {
 };
 ```
 
+You can follow this [document](https://docs.expo.dev/versions/latest/config/babel/) to create config file, and you need to run `npx expo start --clear` to clear the Metro bundler cache.
+
 ## Usage
 
 ### Text Generation
