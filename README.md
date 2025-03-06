@@ -83,6 +83,16 @@ module.exports = {
 
 You can follow this [document](https://docs.expo.dev/versions/latest/config/babel/) to create config file, and you need to run `npx expo start --clear` to clear the Metro bundler cache.
 
+### 5. Development Client Setup
+
+For development and testing, it's required to use a development client instead of Expo Go due to the native code of ONNX Runtime and react-native-transformers.
+
+You can set up a development client using one of these methods:
+
+- **[EAS Development Build](https://docs.expo.dev/develop/development-builds/introduction/)**: Create a custom development client using EAS Build
+- **[Expo Prebuild](https://docs.expo.dev/workflow/prebuild/)**: Eject to a bare workflow to access native code
+
+
 ## Usage
 
 ### Text Generation
