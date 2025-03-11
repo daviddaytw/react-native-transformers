@@ -218,6 +218,10 @@ For detailed API documentation, please visit our [TypeDoc documentation](https:/
 
 Contributions are welcome! See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
+<a href="https://github.com/daviddaytw/react-native-transformers/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=daviddaytw/react-native-transformers" />
+</a>
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
