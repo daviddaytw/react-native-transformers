@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Phi-3-mini",
+    "model": "microsoft/Phi-3-mini-4k-instruct-onnx-web",
+    "onnx_path": "onnx/model_q4.onnx",
+    "options": { "externalData": true }
+  },
+  {
+    "name": "Llama-160M",
+    "model": "Felladrin/onnx-Llama-160M-Chat-v1",
+    "onnx_path": "onnx/decoder_model_merged.onnx"
+  },
+  {
+    "name": "Minueza-32M",
+    "model": "Felladrin/onnx-Minueza-32M-UltraChat",
+    "onnx_path": "onnx/decoder_model_merged.onnx"
+  },
+  {
+    "name": "distilgpt2",
+    "model": "Xenova/distilgpt2_onnx-quantized",
+    "onnx_path": "decoder_model.onnx"
+  },
+  {
+    "name": "tiny-mamba",
+    "model": "Xenova/tiny-mamba-onnx",
+    "onnx_path": "onnx/model.onnx"
+  }
+]

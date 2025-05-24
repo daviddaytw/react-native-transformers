@@ -38,7 +38,8 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli lib",
     "prepare": "bob build",
-    "release": "release-it --only-version"
+    "release": "release-it --only-version",
+    "postinstall": "patch-package"
   },
   "keywords": [
     "react-native",
@@ -150,5 +151,11 @@
     "languages": "js",
     "type": "library",
     "version": "0.50.3"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "github:mybigday/transformers.js-rn#merge",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
+    "text-encoding-polyfill": "^0.6.7"
   }
 }

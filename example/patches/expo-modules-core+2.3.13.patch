@@ -1,0 +1,43 @@
+diff --git a/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/AutoSizingStack.swift b/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/AutoSizingStack.swift
+index 3c855b7..d128df9 100644
+--- a/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/AutoSizingStack.swift
++++ b/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/AutoSizingStack.swift
+@@ -15,6 +15,13 @@ extension ExpoSwiftUI {
+     public static let both: AxisSet = [.horizontal, .vertical]
+   }
+ 
++  private struct SizePreferenceKey: PreferenceKey {
++    static var defaultValue: CGSize = .zero
++    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
++      value = nextValue()
++    }
++  }
++
+   public struct AutoSizingStack<Content: SwiftUI.View>: SwiftUI.View {
+     let content: Content
+     let proxy: ShadowNodeProxy
+@@ -32,12 +39,18 @@ extension ExpoSwiftUI {
+           content.overlay {
+             content.fixedSize(horizontal: axis.contains(.horizontal), vertical: axis.contains(.vertical))
+               .hidden()
+-              .onGeometryChange(for: CGSize.self, of: { proxy in proxy.size }, action: { size in
+-                var size = size
+-                size.width = axis.contains(.horizontal) ? size.width : ShadowNodeProxy.UNDEFINED_SIZE
+-                size.height = axis.contains(.vertical) ? size.height : ShadowNodeProxy.UNDEFINED_SIZE
+-                proxy.setViewSize?(size)
+-              })
++              .background(
++                GeometryReader { geometry in
++                  Color.clear
++                    .preference(key: SizePreferenceKey.self, value: geometry.size)
++                }
++              )
++              .onPreferenceChange(SizePreferenceKey.self) { size in
++                var newSize = size
++                newSize.width = axis.contains(.horizontal) ? size.width : ShadowNodeProxy.UNDEFINED_SIZE
++                newSize.height = axis.contains(.vertical) ? size.height : ShadowNodeProxy.UNDEFINED_SIZE
++                proxy.setViewSize?(newSize)
++              }
+           }
+         } else {
+           content

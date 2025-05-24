@@ -1,6 +1,10 @@
-import { env, AutoTokenizer, PreTrainedTokenizer } from "@xenova/transformers";
-import { TextGeneration as Model } from "../models/text-generation";
-import { LoadOptions } from "../models/base";
+import {
+  env,
+  AutoTokenizer,
+  PreTrainedTokenizer,
+} from '@huggingface/transformers';
+import { TextGeneration as Model } from '../models/text-generation';
+import { LoadOptions } from '../models/base';
 
 /** Initialization Options */
 export interface InitOptions extends LoadOptions {
@@ -23,7 +27,7 @@ let _options: InitOptions = {
   fetch: async (url) => url,
   verbose: false,
   externalData: false,
-  executionProviders: ["cpu"],
+  executionProviders: ['cpu'],
 };
 
 /**
@@ -35,7 +39,7 @@ let _options: InitOptions = {
  */
 function token_to_text(tokens: bigint[], startidx: number): string {
   if (!tokenizer) {
-    throw new Error("Tokenizer undefined, please initialize first.");
+    throw new Error('Tokenizer undefined, please initialize first.');
   }
 
   return tokenizer.decode(tokens.slice(startidx) as unknown as number[], {
@@ -52,10 +56,10 @@ function token_to_text(tokens: bigint[], startidx: number): string {
  */
 async function generate(
   prompt: string,
-  callback: (text: string) => void = () => {},
+  callback: (text: string) => void = () => {}
 ): Promise<string> {
   if (!tokenizer) {
-    throw new Error("Tokenizer undefined, please initialize first.");
+    throw new Error('Tokenizer undefined, please initialize first.');
   }
 
   const { input_ids } = await tokenizer(prompt, {
@@ -66,7 +70,7 @@ async function generate(
 
   // Clear caches
   model.initializeFeed();
-  let output_text = "";
+  let output_text = '';
   const record_output = (text: string) => {
     output_text += text;
     return text;
@@ -78,7 +82,7 @@ async function generate(
     (tokens) => {
       callback(record_output(token_to_text(tokens, output_index)));
     },
-    { maxTokens: _options.max_tokens },
+    { maxTokens: _options.max_tokens }
   );
 
   callback(record_output(token_to_text(output_tokens, output_index)));
@@ -96,7 +100,7 @@ async function generate(
 async function init(
   model_name: string,
   onnx_path: string,
-  options?: Partial<InitOptions>,
+  options?: Partial<InitOptions>
 ): Promise<void> {
   _options = { ..._options, ...options };
   tokenizer = await AutoTokenizer.from_pretrained(model_name);
@@ -111,8 +115,4 @@ async function release(): Promise<void> {
 }
 
 // Export functions for external use
-export default {
-  init,
-  generate,
-  release,
-};
+export default { init, generate, release };

@@ -1,0 +1,27 @@
+diff --git a/node_modules/native-universal-fs/index.js b/node_modules/native-universal-fs/index.js
+index 4991c84..e98413a 100644
+--- a/node_modules/native-universal-fs/index.js
++++ b/node_modules/native-universal-fs/index.js
+@@ -3,14 +3,14 @@ let isExpo = false;
+ const isLoaded = () => fs.documentDirectory || fs.DocumentDirectoryPath;
+ 
+ if (typeof navigator !== "undefined" && navigator.product === "ReactNative") {
+-  try {
+-    fs = require("@dr.pogodin/react-native-fs");
+-  } catch {}
+-  if (!isLoaded()) {
+-    try {
+-      fs = require("react-native-fs");
+-    } catch {}
+-  }
++  // try {
++  //   fs = require("@dr.pogodin/react-native-fs");
++  // } catch {}
++  // if (!isLoaded()) {
++  //   try {
++  //     fs = require("react-native-fs");
++  //   } catch {}
++  // }
+   if (!isLoaded()) {
+     try {
+       fs = require("expo-file-system");
