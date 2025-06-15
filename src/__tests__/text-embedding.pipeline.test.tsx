@@ -1,35 +1,32 @@
-import TextEmbeddingPipeline from "../pipelines/text-embedding";
+import TextEmbeddingPipeline from '../pipelines/text-embedding';
 
 // Mock the TextEmbedding model
-jest.mock("../models/text-embedding", () => {
+jest.mock('../models/text-embedding', () => {
   return {
-    TextEmbedding: jest.fn().mockImplementation(() => ({
-      load: jest.fn().mockResolvedValue(undefined),
-      embed: jest.fn().mockResolvedValue(new Float32Array([0.1, 0.2, 0.3])),
-      release: jest.fn().mockResolvedValue(undefined),
-    })),
+    TextEmbedding: jest
+      .fn()
+      .mockImplementation(() => ({
+        load: jest.fn().mockResolvedValue(undefined),
+        embed: jest.fn().mockResolvedValue(new Float32Array([0.1, 0.2, 0.3])),
+        release: jest.fn().mockResolvedValue(undefined),
+      })),
   };
 });
 
 // Create a callable tokenizer mock
 const createCallableTokenizer = () => {
-  const tokenizer = jest.fn().mockResolvedValue({
-    input_ids: [1n, 2n, 3n],
-  });
+  const tokenizer = jest.fn().mockResolvedValue({ input_ids: [1n, 2n, 3n] });
   return tokenizer;
 };
 
-jest.mock("@xenova/transformers", () => ({
-  env: {
-    allowRemoteModels: true,
-    allowLocalModels: false,
-  },
+jest.mock('@huggingface/transformers', () => ({
+  env: { allowRemoteModels: true, allowLocalModels: false },
   AutoTokenizer: {
     from_pretrained: jest.fn().mockResolvedValue(createCallableTokenizer()),
   },
 }));
 
-describe("TextEmbedding Pipeline", () => {
+describe('TextEmbedding Pipeline', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -38,21 +35,21 @@ describe("TextEmbedding Pipeline", () => {
     await TextEmbeddingPipeline.release();
   });
 
-  it("should throw error when not initialized", async () => {
-    await expect(TextEmbeddingPipeline.embed("test text")).rejects.toThrow(
-      "Tokenizer undefined, please initialize first",
+  it('should throw error when not initialized', async () => {
+    await expect(TextEmbeddingPipeline.embed('test text')).rejects.toThrow(
+      'Tokenizer undefined, please initialize first'
     );
   });
 
-  it("should initialize properly", async () => {
+  it('should initialize properly', async () => {
     await expect(
-      TextEmbeddingPipeline.init("test-model", "model.onnx"),
+      TextEmbeddingPipeline.init('test-model', 'model.onnx')
     ).resolves.not.toThrow();
   });
 
-  it("should generate embeddings", async () => {
-    await TextEmbeddingPipeline.init("test-model", "model.onnx");
-    const embeddings = await TextEmbeddingPipeline.embed("test text");
+  it('should generate embeddings', async () => {
+    await TextEmbeddingPipeline.init('test-model', 'model.onnx');
+    const embeddings = await TextEmbeddingPipeline.embed('test text');
     expect(embeddings).toBeInstanceOf(Float32Array);
     expect(embeddings.length).toBe(3);
   });

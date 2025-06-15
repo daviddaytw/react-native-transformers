@@ -1,6 +1,10 @@
-import { env, AutoTokenizer, PreTrainedTokenizer } from "@xenova/transformers";
-import { TextEmbedding as Model } from "../models/text-embedding";
-import { LoadOptions } from "../models/base";
+import {
+  env,
+  AutoTokenizer,
+  PreTrainedTokenizer,
+} from '@huggingface/transformers';
+import { TextEmbedding as Model } from '../models/text-embedding';
+import { LoadOptions } from '../models/base';
 
 /** Initialization Options for Text Embedding */
 export interface TextEmbeddingOptions extends LoadOptions {
@@ -23,7 +27,7 @@ let _options: TextEmbeddingOptions = {
   fetch: async (url) => url,
   verbose: false,
   externalData: false,
-  executionProviders: ["cpu"],
+  executionProviders: ['cpu'],
 };
 
 /**
@@ -34,7 +38,7 @@ let _options: TextEmbeddingOptions = {
  */
 async function embed(text: string): Promise<Float32Array> {
   if (!tokenizer) {
-    throw new Error("Tokenizer undefined, please initialize first.");
+    throw new Error('Tokenizer undefined, please initialize first.');
   }
 
   const { input_ids } = await tokenizer(text, {
@@ -57,7 +61,7 @@ async function embed(text: string): Promise<Float32Array> {
 async function init(
   model_name: string,
   onnx_path: string,
-  options?: Partial<TextEmbeddingOptions>,
+  options?: Partial<TextEmbeddingOptions>
 ): Promise<void> {
   _options = { ..._options, ...options };
   tokenizer = await AutoTokenizer.from_pretrained(model_name);
@@ -72,8 +76,4 @@ async function release(): Promise<void> {
 }
 
 // Export functions for external use
-export default {
-  init,
-  embed,
-  release,
-};
+export default { init, embed, release };
