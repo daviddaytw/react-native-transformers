@@ -46,12 +46,20 @@ export class TextEmbedding extends Base {
     // Calculate mean across token dimension (dim 1) to get a single embedding vector
     const data = embeddings.data as Float32Array;
     const [, seqLen, hiddenSize] = embeddings.dims;
+
+    if (!seqLen || !hiddenSize || !data) {
+      throw new Error('Invalid embedding dimensions or data');
+    }
+
     const result = new Float32Array(hiddenSize);
 
     for (let h = 0; h < hiddenSize; h++) {
       let sum = 0;
       for (let s = 0; s < seqLen; s++) {
-        sum += data[s * hiddenSize + h];
+        const index = s * hiddenSize + h;
+        if (data[index] !== undefined) {
+          sum += data[index];
+        }
       }
       result[h] = sum / seqLen;
     }

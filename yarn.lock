@@ -11778,7 +11778,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"onnxruntime-react-native@npm:^1.22.0":
+"onnxruntime-react-native@npm:^1.21.0, onnxruntime-react-native@npm:^1.22.0":
   version: 1.22.0
   resolution: "onnxruntime-react-native@npm:1.22.0"
   dependencies:
@@ -12759,6 +12759,7 @@ __metadata:
     eslint-plugin-ft-flow: ^3.0.11
     eslint-plugin-prettier: ^5.2.3
     jest: ^29.7.0
+    onnxruntime-react-native: ^1.21.0
     patch-package: ^8.0.0
     postinstall-postinstall: ^2.1.0
     prettier: ^3.0.3

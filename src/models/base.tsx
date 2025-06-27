@@ -109,16 +109,22 @@ export class Base {
 
   protected argmax(t: Tensor): number {
     const arr = t.data;
-    const start = t.dims[2] * (t.dims[1] - 1);
+    const dims = t.dims;
+
+    if (!dims || dims.length < 3 || !dims[1] || !dims[2]) {
+      throw new Error('Invalid tensor dimensions');
+    }
+
+    const start = dims[2] * (dims[1] - 1);
     let max = arr[start];
     let maxidx = 0;
 
-    for (let i = 0; i < t.dims[2]; i++) {
+    for (let i = 0; i < dims[2]; i++) {
       const val = arr[i + start];
       if (!isFinite(val as number)) {
         throw new Error('found infinitive in logits');
       }
-      if (val > max) {
+      if (val !== undefined && max !== undefined && val > max) {
         max = val;
         maxidx = i;
       }
@@ -138,7 +144,10 @@ export class Base {
         if (t !== undefined && t.location === 'gpu-buffer') {
           t.dispose();
         }
-        feed[newName] = outputs[name];
+        const outputTensor = outputs[name];
+        if (outputTensor) {
+          feed[newName] = outputTensor;
+        }
       }
     }
   }

@@ -157,6 +157,7 @@
   },
   "dependencies": {
     "@huggingface/transformers": "github:mybigday/transformers.js-rn#merge",
+    "onnxruntime-react-native": "^1.21.0",
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
     "text-encoding-polyfill": "^0.6.7"

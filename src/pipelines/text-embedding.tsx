@@ -1,10 +1,10 @@
 import {
   env,
   AutoTokenizer,
-  PreTrainedTokenizer,
 } from '@huggingface/transformers';
+import type { PreTrainedTokenizer } from '@huggingface/transformers';
 import { TextEmbedding as Model } from '../models/text-embedding';
-import { LoadOptions } from '../models/base';
+import type { LoadOptions } from '../models/base';
 
 /** Initialization Options for Text Embedding */
 export interface TextEmbeddingOptions extends LoadOptions {
@@ -48,7 +48,7 @@ async function embed(text: string): Promise<Float32Array> {
     max_length: _options.max_tokens,
   });
 
-  return await model.embed(input_ids);
+  return await model.embed(input_ids.map(BigInt));
 }
 
 /**
