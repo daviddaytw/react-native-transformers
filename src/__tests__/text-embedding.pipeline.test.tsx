@@ -3,13 +3,11 @@ import TextEmbeddingPipeline from '../pipelines/text-embedding';
 // Mock the TextEmbedding model
 jest.mock('../models/text-embedding', () => {
   return {
-    TextEmbedding: jest
-      .fn()
-      .mockImplementation(() => ({
-        load: jest.fn().mockResolvedValue(undefined),
-        embed: jest.fn().mockResolvedValue(new Float32Array([0.1, 0.2, 0.3])),
-        release: jest.fn().mockResolvedValue(undefined),
-      })),
+    TextEmbedding: jest.fn().mockImplementation(() => ({
+      load: jest.fn().mockResolvedValue(undefined),
+      embed: jest.fn().mockResolvedValue(new Float32Array([0.1, 0.2, 0.3])),
+      release: jest.fn().mockResolvedValue(undefined),
+    })),
   };
 });
 

@@ -1,8 +1,8 @@
-import { TextGeneration } from "../models/text-generation";
-import { Tensor } from "onnxruntime-react-native";
+import { TextGeneration } from '../models/text-generation';
+import { Tensor } from 'onnxruntime-react-native';
 
 // Mock onnxruntime-react-native
-jest.mock("onnxruntime-react-native", () => ({
+jest.mock('onnxruntime-react-native', () => ({
   Tensor: jest.fn().mockImplementation((type, data, dims) => ({
     type,
     data,
@@ -30,7 +30,7 @@ class TestableTextGeneration extends TextGeneration {
   }
 }
 
-describe("TextGeneration Model", () => {
+describe('TextGeneration Model', () => {
   let model: TestableTextGeneration;
   let mockRunCount: number;
 
@@ -39,15 +39,15 @@ describe("TextGeneration Model", () => {
     model = new TestableTextGeneration();
   });
 
-  describe("initializeFeed", () => {
-    it("should reset output tokens", () => {
+  describe('initializeFeed', () => {
+    it('should reset output tokens', () => {
       model.outputTokens = [1n, 2n, 3n];
       model.initializeFeed();
       expect(model.outputTokens).toEqual([]);
     });
   });
 
-  describe("generate", () => {
+  describe('generate', () => {
     const mockCallback = jest.fn();
     const mockTokens = [1n, 2n]; // Initial tokens
 
@@ -56,7 +56,7 @@ describe("TextGeneration Model", () => {
       mockRunCount = 0;
     });
 
-    it("should generate tokens until EOS token is found", async () => {
+    it('should generate tokens until EOS token is found', async () => {
       model.setSession({
         run: jest.fn().mockImplementation(() => {
           mockRunCount++;
@@ -64,7 +64,7 @@ describe("TextGeneration Model", () => {
             logits: {
               data: new Float32Array([0.1, 0.2, 0.3, 2.0]), // highest value at index 3
               dims: [1, 1, 4],
-              type: "float32",
+              type: 'float32',
             },
           });
         }),
@@ -77,7 +77,7 @@ describe("TextGeneration Model", () => {
       expect(mockCallback).toHaveBeenCalled();
     });
 
-    it("should respect maxTokens limit", async () => {
+    it('should respect maxTokens limit', async () => {
       const maxTokens = 5;
       model.setSession({
         run: jest.fn().mockImplementation(() => {
@@ -86,7 +86,7 @@ describe("TextGeneration Model", () => {
             logits: {
               data: new Float32Array([0.1, 0.2, 0.3, 0.1]), // will generate token 2 (index with highest value)
               dims: [1, 1, 4],
-              type: "float32",
+              type: 'float32',
             },
           });
         }),
@@ -100,38 +100,38 @@ describe("TextGeneration Model", () => {
       expect(mockRunCount).toBeLessThanOrEqual(maxTokens - mockTokens.length);
     });
 
-    it("should throw error if session is undefined", async () => {
+    it('should throw error if session is undefined', async () => {
       model.setSession(undefined);
       await expect(
-        model.generate(mockTokens, mockCallback, { maxTokens: 10 }),
-      ).rejects.toThrow("Session is undefined");
+        model.generate(mockTokens, mockCallback, { maxTokens: 10 })
+      ).rejects.toThrow('Session is undefined');
     });
 
-    it("should create correct tensors for input", async () => {
+    it('should create correct tensors for input', async () => {
       model.setSession({
         run: jest.fn().mockResolvedValue({
           logits: {
             data: new Float32Array([0.1, 0.2, 0.3, 0.4]),
             dims: [1, 1, 4],
-            type: "float32",
+            type: 'float32',
           },
         }),
       });
 
       await model.generate(mockTokens, mockCallback, { maxTokens: 10 });
-      expect(Tensor).toHaveBeenCalledWith("int64", expect.any(BigInt64Array), [
+      expect(Tensor).toHaveBeenCalledWith('int64', expect.any(BigInt64Array), [
         1,
         mockTokens.length,
       ]);
     });
 
-    it("should handle generation with attention mask", async () => {
+    it('should handle generation with attention mask', async () => {
       model.setSession({
         run: jest.fn().mockResolvedValue({
           logits: {
             data: new Float32Array([0.1, 0.2, 0.3, 0.4]),
             dims: [1, 1, 4],
-            type: "float32",
+            type: 'float32',
           },
         }),
       });
@@ -145,8 +145,8 @@ describe("TextGeneration Model", () => {
     });
   });
 
-  describe("release", () => {
-    it("should release session resources", async () => {
+  describe('release', () => {
+    it('should release session resources', async () => {
       const mockSession = {
         release: jest.fn().mockResolvedValue(undefined),
       };

@@ -1,6 +1,6 @@
-import "text-encoding-polyfill";
-import { Tensor } from "onnxruntime-react-native";
-import { Base } from "./base";
+import 'text-encoding-polyfill';
+import { Tensor } from 'onnxruntime-react-native';
+import { Base } from './base';
 
 /**
  * Class to handle text embedding model on top of onnxruntime
@@ -15,21 +15,21 @@ export class TextEmbedding extends Base {
   public async embed(tokens: bigint[]): Promise<Float32Array> {
     const feed = this.feed;
     const inputIdsTensor = new Tensor(
-      "int64",
+      'int64',
       BigInt64Array.from(tokens.map(BigInt)),
-      [1, tokens.length],
+      [1, tokens.length]
     );
     feed.input_ids = inputIdsTensor;
 
     // Create attention mask (1 for all tokens)
     feed.attention_mask = new Tensor(
-      "int64",
+      'int64',
       BigInt64Array.from({ length: tokens.length }, () => 1n),
-      [1, tokens.length],
+      [1, tokens.length]
     );
 
     if (!this.sess) {
-      throw new Error("Session is undefined");
+      throw new Error('Session is undefined');
     }
 
     // Run inference to get embeddings
@@ -40,7 +40,7 @@ export class TextEmbedding extends Base {
     const embeddings = outputs.last_hidden_state || outputs.embeddings;
 
     if (!embeddings) {
-      throw new Error("No embedding output found in model outputs");
+      throw new Error('No embedding output found in model outputs');
     }
 
     // Calculate mean across token dimension (dim 1) to get a single embedding vector
