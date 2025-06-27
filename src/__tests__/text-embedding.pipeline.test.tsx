@@ -17,13 +17,6 @@ const createCallableTokenizer = () => {
   return tokenizer;
 };
 
-jest.mock('@huggingface/transformers', () => ({
-  env: { allowRemoteModels: true, allowLocalModels: false },
-  AutoTokenizer: {
-    from_pretrained: jest.fn().mockResolvedValue(createCallableTokenizer()),
-  },
-}));
-
 describe('TextEmbedding Pipeline', () => {
   beforeEach(() => {
     jest.clearAllMocks();

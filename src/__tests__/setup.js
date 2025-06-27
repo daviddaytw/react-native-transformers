@@ -44,13 +44,3 @@ jest.mock('onnxruntime-react-native', () => ({
     dispose: jest.fn(),
   })),
 }));
-
-// Mock transformers
-jest.mock('@huggingface/transformers', () => ({
-  env: { allowRemoteModels: true, allowLocalModels: false },
-  AutoTokenizer: {
-    from_pretrained: jest.fn().mockResolvedValue({
-      decode: jest.fn((_tokens, _options) => 'decoded text'),
-    }),
-  },
-}));
