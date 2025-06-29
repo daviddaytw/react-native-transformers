@@ -1,7 +1,4 @@
-import {
-  env,
-  AutoTokenizer,
-} from '@huggingface/transformers';
+import { env, AutoTokenizer } from '@huggingface/transformers';
 import type { PreTrainedTokenizer } from '@huggingface/transformers';
 import { TextEmbedding as Model } from '../models/text-embedding';
 import type { LoadOptions } from '../models/base';

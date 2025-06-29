@@ -11,12 +11,6 @@ jest.mock('../models/text-embedding', () => {
   };
 });
 
-// Create a callable tokenizer mock
-const createCallableTokenizer = () => {
-  const tokenizer = jest.fn().mockResolvedValue({ input_ids: [1n, 2n, 3n] });
-  return tokenizer;
-};
-
 describe('TextEmbedding Pipeline', () => {
   beforeEach(() => {
     jest.clearAllMocks();

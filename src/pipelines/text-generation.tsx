@@ -1,7 +1,4 @@
-import {
-  env,
-  AutoTokenizer,
-} from '@huggingface/transformers';
+import { env, AutoTokenizer } from '@huggingface/transformers';
 import type { PreTrainedTokenizer } from '@huggingface/transformers';
 import { TextGeneration as Model } from '../models/text-generation';
 import type { LoadOptions } from '../models/base';
