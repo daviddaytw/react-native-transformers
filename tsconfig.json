@@ -4,6 +4,7 @@
     "paths": {
       "react-native-transformers": ["./src/index"]
     },
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,

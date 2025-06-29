@@ -1,6 +1,6 @@
-import "text-encoding-polyfill";
-import { Tensor } from "onnxruntime-react-native";
-import { Base } from "./base";
+import 'text-encoding-polyfill';
+import { Tensor } from 'onnxruntime-react-native';
+import { Base } from './base';
 
 /**
  * Class to handle a large language model on top of onnxruntime
@@ -26,12 +26,12 @@ export class TextGeneration extends Base {
   public async generate(
     tokens: bigint[],
     callback: (tokens: bigint[]) => void,
-    options: { maxTokens: number },
+    options: { maxTokens: number }
   ): Promise<bigint[]> {
     const maxTokens = options.maxTokens;
     const feed = this.feed;
     const initialTokens = BigInt64Array.from(tokens.map(BigInt));
-    const inputIdsTensor = new Tensor("int64", initialTokens, [
+    const inputIdsTensor = new Tensor('int64', initialTokens, [
       1,
       tokens.length,
     ]);
@@ -47,16 +47,16 @@ export class TextGeneration extends Base {
     // Prepare position IDs if needed
     if (this.needPositionIds) {
       feed.position_ids = new Tensor(
-        "int64",
+        'int64',
         BigInt64Array.from({ length: initialLength }, (_, i) =>
-          BigInt(sequenceLength - initialLength + i),
+          BigInt(sequenceLength - initialLength + i)
         ),
-        [1, initialLength],
+        [1, initialLength]
       );
     }
 
     if (!this.sess) {
-      throw new Error("Session is undefined");
+      throw new Error('Session is undefined');
     }
 
     // Generate tokens until the end of sequence token is found or max tokens limit is reached
@@ -69,9 +69,9 @@ export class TextGeneration extends Base {
       sequenceLength = this.outputTokens.length;
 
       feed.attention_mask = new Tensor(
-        "int64",
+        'int64',
         BigInt64Array.from({ length: sequenceLength }, () => 1n),
-        [1, sequenceLength],
+        [1, sequenceLength]
       );
 
       const outputs = await this.sess.run(feed);
@@ -84,16 +84,16 @@ export class TextGeneration extends Base {
 
       this.updateKVCache(feed, outputs);
       feed.input_ids = new Tensor(
-        "int64",
+        'int64',
         BigInt64Array.from([lastToken]),
-        [1, 1],
+        [1, 1]
       );
 
       if (this.needPositionIds) {
         feed.position_ids = new Tensor(
-          "int64",
+          'int64',
           BigInt64Array.from([BigInt(sequenceLength)]),
-          [1, 1],
+          [1, 1]
         );
       }
     }

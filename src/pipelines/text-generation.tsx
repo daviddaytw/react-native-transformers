@@ -1,10 +1,7 @@
-import {
-  env,
-  AutoTokenizer,
-  PreTrainedTokenizer,
-} from '@huggingface/transformers';
+import { env, AutoTokenizer } from '@huggingface/transformers';
+import type { PreTrainedTokenizer } from '@huggingface/transformers';
 import { TextGeneration as Model } from '../models/text-generation';
-import { LoadOptions } from '../models/base';
+import type { LoadOptions } from '../models/base';
 
 /** Initialization Options */
 export interface InitOptions extends LoadOptions {
@@ -78,7 +75,7 @@ async function generate(
 
   const output_index = model.outputTokens.length + input_ids.length;
   const output_tokens = await model.generate(
-    input_ids,
+    input_ids.map(BigInt),
     (tokens) => {
       callback(record_output(token_to_text(tokens, output_index)));
     },

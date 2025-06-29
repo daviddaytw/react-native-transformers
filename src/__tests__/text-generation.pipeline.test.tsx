@@ -1,25 +1,4 @@
 import TextGenerationPipeline from '../pipelines/text-generation';
-import type { PreTrainedTokenizer } from '@huggingface/transformers';
-
-// Mock the transformers library
-jest.mock('@huggingface/transformers', () => {
-  // Create a mock tokenizer function with the correct type
-  const mockTokenizerFn = Object.assign(
-    jest
-      .fn<Promise<{ input_ids: bigint[] }>, [string, any]>()
-      .mockResolvedValue({ input_ids: [1n, 2n] }),
-    {
-      decode: jest.fn((_tokens: bigint[], _options: unknown) => 'decoded text'),
-    }
-  ) as unknown as PreTrainedTokenizer;
-
-  return {
-    env: { allowRemoteModels: true, allowLocalModels: false },
-    AutoTokenizer: {
-      from_pretrained: jest.fn().mockResolvedValue(mockTokenizerFn),
-    },
-  };
-});
 
 // Mock the model
 jest.mock('../models/text-generation', () => {
