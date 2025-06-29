@@ -412,20 +412,6 @@ describe('Base Model Utility Functions', () => {
     });
     */
   });
-
-  describe('utility function coverage', () => {
-    it('should test getHuggingfaceUrl function indirectly', () => {
-      // This is tested indirectly through the load method above
-      // The function generates URLs like: https://huggingface.co/{model}/resolve/main/{filepath}
-      expect(true).toBe(true);
-    });
-
-    it('should test load function indirectly', () => {
-      // This is tested indirectly through the load method above
-      // The function fetches data and converts to ArrayBuffer
-      expect(true).toBe(true);
-    });
-  });
 });
 
 // Integration test using existing setup.js mocking
