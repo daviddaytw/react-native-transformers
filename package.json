@@ -1,6 +1,6 @@
 {
   "name": "react-native-transformers",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0",
   "description": "Run LLM from huggingface on react-native and Expo locally with onnxruntime.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
