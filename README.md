@@ -1,5 +1,10 @@
 # react-native-transformers
 
+> ⚠️ **DEPRECATION NOTICE**  
+> As of **July 2025**, this project is no longer actively maintained. While `react-native-transformers` successfully enables on-device inference of Hugging Face transformer models in React Native and Expo apps, I haven't found a strong or consistent use case to justify continued development.  
+>
+> If you find this project useful and are interested in taking over its maintenance, feel free to fork it or reach out via GitHub. Contributions are still welcome, but this repository is now considered **archived** in terms of active development.
+
 ![NPM Version](https://img.shields.io/npm/v/react-native-transformers)
 [![codecov](https://codecov.io/github/daviddaytw/react-native-transformers/graph/badge.svg?token=G3D0Y33SI4)](https://codecov.io/github/daviddaytw/react-native-transformers)
 [![TypeDoc](https://github.com/daviddaytw/react-native-transformers/actions/workflows/docs.yml/badge.svg)](https://daviddaytw.github.io/react-native-transformers)
